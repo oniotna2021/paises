@@ -2,6 +2,19 @@
   text-align: center;
 }
 
+.search{
+  margin-left: 50px;
+}
+
+.h300{
+  height: 200px;
+  width:300px;
+}
+
+.buttonRegion{
+  style:none;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
