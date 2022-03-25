@@ -1,18 +1,124 @@
 .App {
   text-align: center;
+
+}
+
+body {
+  background-color:#FBFBFB;
+  width: 99%;
 }
 
 .search{
   margin-left: 50px;
 }
 
+#filter{
+  margin-left:100px;
+}
+#where{
+  padding-left: 50px;
+}
+#cardContainer{
+  padding-right:50px;
+  padding-left:50px;
+  /* display:flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center; */
+  background-color:#FBFBFB;
+}
+
+.card{
+  width:240px;
+  height:350px;
+  margin-top:30px;
+  text-align:left;
+  font-family: arial;
+  box-shadow: 0px 0px 6px -2px rgba(0,0,0,0.75);
+}
+
+.textcard{
+ width: 100%;
+ padding-top:20px;
+ text-align: left;
+ text-justify: center;
+ padding-left:30px;
+
+
+}
+
+#wherefont{
+  font-family: arial;
+}
+
+#smalltext{
+  font-size:40;
+}
+
+#imgcard{
+  width: 240px;
+  height: 178px;
+  background-color:blue;
+
+  
+}
+
+#just{
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+}
+
+#figure{
+  width:230px;
+  background-color:white;
+  margin-top:20px;
+  text-align:center;
+  margin-bottom:20px;
+  box-shadow: 0px 0px 6px -2px rgba(0,0,0,0.75);
+  
+}
+
+#searchBar{
+  z-index:-1;
+  width:99%;
+  height:40px;
+  /* background-color: red; */
+  display:flex;
+  flex-direction: row;
+}
+
+#searchCountry{
+  z-index: 1;
+  width:20%;
+  height:40px;
+  /* background-color:blue; */
+  float:left;
+  margin-left:1%;
+}
+
+#filterRegion{
+  z-index: 1;
+  width:20%;
+  height:40px;
+  /* background-color:blue; */
+  float:left;
+  margin-left:52%;
+}
+
+#categoria{
+  width: 200px;
+}
+
+
+
 .h300{
   height: 200px;
   width:300px;
 }
 
-.buttonRegion{
-  style:none;
+.backgrounGray{
+  background-color:gray;
 }
 
 .App-logo {

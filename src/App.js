@@ -1,253 +1,207 @@
-import logo from './logo.svg';
-import './App.css';
-import { useEffect,useState } from 'react';
-import axios from 'axios'
+import "./App.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Paginacion from "../src/Engine/paginacion";
-import { Alert } from 'bootstrap';
 
-function App() {
-  
-  const [countries, setCountries]=useState([]);
-  const [paginaActual, setPaginaActual] = useState(1);
-  const [datos, setDatos] = useState({
-    consulta: '',
+export default function App() {
+  const [countries1, setCountries1] = useState([]);
+  const [countries, setCountries] = useState([]);
+  // const [actualPage, setactualPage] = useState(1);
+  const [data, setData] = useState({
+    consulta: "",
   });
 
-  useEffect(()=>{
+  const [data1, setData1] = useState({
+    consulta1: "",
+  });
+
+  useEffect(() => {
     loadData();
-  },[])
+  }, []);
 
   const handleInputChange = (event) => {
     // console.log(event.target.name)
-    console.log(event.target.value)
-    setDatos({
-      ...datos,
+    console.log(event.target.value);
+    setData({
+      ...data,
       [event.target.name]: event.target.value,
     });
-  };
 
-  const loadData = () =>{
-    let url='https://restcountries.com/v2/all';
-      axios.get(url)
-      .then(res => {
-        setCountries(res.data)
-        console.log(res.data[0])
+    const url = "https://restcountries.com/v2/name/" + event.target.value;
+    axios
+      .get(url)
+      .then((res) => {
+        setCountries(res.data);
 
+        // console.log(res.data);
       })
       .catch((error) => {
-        console.log(error); 
-      });   
-  }
+        console.log(error);
+      });
 
-  const pageTotal = 8;
-
-  const getTotalPaginas = () => {
-    let totalCountries = countries.length;
-    return Math.ceil(totalCountries / pageTotal);
+    event.preventDefault();
   };
 
-  let paginateCountry = countries.slice(
-    (paginaActual - 1) * pageTotal,
-    paginaActual * pageTotal
-  );
+  const handleInputChange1 = (event) => {
+    // console.log(event.target.name)
+    
+    if (event.target.value === "") {
+      let url = "https://restcountries.com/v2/all";
+      axios
+        .get(url)
+        .then((res) => {
+          setCountries(res.data);
 
+          // console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
 
-  const search=(e)=>{
-
-    var resultadosBusqueda=countries.filter((elemento)=>{
-      if(elemento.name.toString().toLowerCase().includes(datos.consulta.toLowerCase())
-      ){
+    var resultadosBusqueda = countries.filter((elemento) => {
+      if (
+        elemento.region
+          .toString()
+          .toLowerCase()
+          .includes(event.target.value.toLowerCase())
+      ) {
         return elemento;
       }
     });
     setCountries(resultadosBusqueda);
-    e.preventDefault();
+    console.log(resultadosBusqueda);
+    event.preventDefault();
+
+    // axios
+    //   .get(url)
+    //   .then((res) => {
+    //     setCountries(res.data[0]);
+    //     console.log(res.data[0].name);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    // event.preventDefault();
   };
 
-  const searchRegionAfrica=(e)=>{
+  const loadData = () => {
+    let url = "https://restcountries.com/v2/all";
+    axios
+      .get(url)
+      .then((res) => {
+        setCountries(res.data);
 
-    alert('entre a buscar por region')
-
-    setDatos({
-      ...datos,
-      consulta: "Africa",
-    });
-
-    var resultadosBusqueda=countries.filter((elemento)=>{
-      if(elemento.region.toString().toLowerCase().includes(datos.consulta.toLowerCase())
-      ){
-        return elemento;
-      }
-    });
-    setCountries(resultadosBusqueda);
-    e.preventDefault();
+        // console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
-    
     <div className="App">
-
-
-        
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <div className="container-fluid">
-            <div class="navbar-brand"><h3>Where in the world ?</h3></div>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light" id="navtop">
+        <div className="container-fluid">
+          <div className="navbar-brand" id="wherefont">
+            <h3 id="where"><b>Where in the world ?</b></h3>
           </div>
-        </nav>
-        
-        <nav className="bg light navbar navbar-expand-lg navbar-light bg-light">
-        
-        <form className="search d-flex" onSubmit={search}>
-        
-          
-          <button class="" type="submit"><i class="fa fa-search"></i></button>
-          <input className="form-control me-2" name="consulta" type="search" placeholder="Search for country..." aria-label="Search" onChange={handleInputChange}/>
-        
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Filter by Region
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <button type="button" class="dropdown-item" onclick={searchRegionAfrica}>Africa</button>
-            <li><button class="dropdown-item">America</button></li>
-            <li><button class="dropdown-item">Asia</button></li>
-            <li><button class="dropdown-item">Europe</button></li>
-            <li><button class="dropdown-item">Oceania</button></li>
-            
-          </ul>
-        </li>
-      </ul>
-    </div>
-        </form>
+        </div>
+      </nav>
 
-        </nav>
+      <nav className="bg light navbar navbar-expand-lg navbar-light bg-light"></nav>
 
-        <div>
-            <main className="main">
-              
+      <div className="" id="searchBar">
+        <div className="" id="searchCountry">
+          {/* begin searchBar */}
+          <form className="search d-flex">
+            {/* <button className="" type="submit">
+              <i className="fa fa-search"></i>
+            </button> */}
+            <i class="material-icons">search</i>
+            <input
+              className="form-control me-2"
+              name="consulta"
+              type="search"
+              placeholder="Search for country..."
+              aria-label="Search"
+              onChange={handleInputChange}
+            />
+          </form>
+        </div>
+        <div className="" id="filterRegion">
+          <div className="col-md-5" id="filter">
+            <select
+              name="consulta1"
+              onChange={handleInputChange1}
+              className="form-select"
+              id="categoria"
+              required
+            >
+              <option value="">Filter by Region...</option>
+              <option>africa</option>
+              <option>america</option>
+              <option>asia</option>
+              <option>europe</option>
+              <option>oceania</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-              <br />
+      <div>
+        <main className="main">
+          <br />
 
-              <div className="page-content">
-                <div
-                  className="
+          <div className="page-content">
+            <div
+              className="
                 
                 "
-                >
-                  <div className="row">
-                    <div className="col12 col-lg-12">
-                      <div className="products mb-3">
-                        <div className="row justify-content-center">
+            >
+              <div className="row">
+                <div className="col12 col-lg-12">
+                  <div className="products mb-3">
+                    <div className="row justify-content-center">
+                      {/* mapeo de las canciones en el contenedor  */}
+                      {countries.map((country) => (
+                        <div className="col-md-4 col-lg-3 col-sm-12 marginl" id="cardContainer">
+                        <div className="card rounded">
+                          <div id="imgcard" className="Rounded">
+                          <img src={country.flags.png} id="just" className="Rounded"/>
+                          </div>
                           
-                          {/* mapeo de las canciones en el contenedor  */}
-                          {paginateCountry.map((country) => (
-                            
-                            <div className="col-md-4 col-lg-3 col-sm-12 marginl">
-<div className="product product-7 text-center">
-  <figure className="product-media">
-    <div>
-      <a href=""
-          target="_blank"
-      >
-        <img
-          src={country.flags.png}
-          alt="Product"
-          className="product-image rounded h300"
-        />
-      </a>
-      <br />
-    </div>
+                          <div className="textcard">
+                          <h5><b>{country.name}</b></h5>
+                          <h8 className="smalltext"><strong>Population: </strong></h8>{country.population}
+                          <br/>
+                          <h8 className="smalltext"><strong>Region: </strong></h8>{country.region}
+                          <br/>
+                          <h8 className="smalltext"><strong>Capital: </strong></h8>{country.capital}
+                          
+                          </div>
+                          
+                       
 
-
-    <div className="product-action-vertical">
-      <div
-        className="btn-product-icon btn-quickview"
-        title="Vista Rapida"
-      >
-        <br />
-        <span className="">
-          <h4>{country.name}</h4>
-        </span>
-      </div>
-    </div>
-
-    <div className="product-action-vertical">
-      <div
-        className="btn-product-icon btn-quickview"
-        title="Vista Rapida"
-      >
-        <span className="">
-          <strong>Population: </strong>{country.population}
-        </span>
-        <br />
-      </div>
-    </div>
-
-    <div className="product-action-vertical">
-      <div
-        className="btn-product-icon btn-quickview"
-        title="Vista Rapida"
-      >
-       
-        <span className="">
-          <strong>Region: </strong>{country.region}
-        </span>
-        <br />
-      </div>
-    </div>
-    <div className="product-action-vertical">
-      <div
-        className="btn-product-icon btn-quickview"
-        title="Vista Rapida"
-      >
-       
-        <span className="">
-          <strong>Capital: </strong>{country.capital}
-        </span>
-        <br />
-      </div>
-    </div>
-
-  </figure>
-</div>
-
-
-</div>
-                            
-                 
-
-  ))}
-                          <Paginacion
-                            pagina={paginaActual}
-                            total={getTotalPaginas()}
-                            onChange={(pagina) => {
-                              setPaginaActual(pagina);
-                            }}
-                          />
                         </div>
-                      </div>
+                        </div>
+                      ))}
+                      {/* <Paginacion
+                        pagina={actualPage}
+                        total={getTotalPaginas()}
+                        onChange={(pagina) => {
+                          setactualPage(pagina);
+                        }}
+                      /> */}
                     </div>
                   </div>
                 </div>
               </div>
-            </main>
+            </div>
           </div>
-
-
-        
-
-        
-
-
-
-
+        </main>
+      </div>
     </div>
-
-    
   );
 }
-
-export default App;
